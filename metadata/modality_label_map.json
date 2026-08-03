@@ -1,0 +1,21 @@
+{
+  "label_to_modality": {
+    "0": "brain_ct",
+    "1": "brain_mri",
+    "2": "chest_xray",
+    "3": "histopathology",
+    "4": "retina",
+    "5": "skin",
+    "6": "ultrasound"
+  },
+  "modality_to_label": {
+    "brain_ct": 0,
+    "brain_mri": 1,
+    "chest_xray": 2,
+    "histopathology": 3,
+    "retina": 4,
+    "skin": 5,
+    "ultrasound": 6
+  },
+  "num_classes": 7
+}

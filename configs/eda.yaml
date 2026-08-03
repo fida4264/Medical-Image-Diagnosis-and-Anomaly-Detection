@@ -1,0 +1,130 @@
+# =============================================================================
+# configs/eda.yaml
+# Medical Dataset Exploratory Data Analysis — Configuration
+# Module 5: Medical AI System
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# General settings
+# ---------------------------------------------------------------------------
+general:
+  output_dir: "outputs/eda"           # relative to project root
+  log_file: "logs/eda.log"
+  random_seed: 42
+  sample_mode: false                  # --sample flag: analyse a small subset
+  sample_size: 500                    # rows sampled per modality in sample mode
+  pixel_analysis_sample: 2000         # max images sampled for pixel-level stats
+  full_pixel_analysis: false          # --full-pixel-analysis: sample all images
+
+# ---------------------------------------------------------------------------
+# Figure / chart settings
+# ---------------------------------------------------------------------------
+figures:
+  dpi: 300                            # publication quality
+  save_format: "png"
+  style: "dark"                       # dark | light
+  figsize_standard: [12, 8]           # [width, height] inches
+  figsize_wide: [18, 8]
+  figsize_tall: [10, 14]
+  figsize_square: [10, 10]
+  figsize_dashboard: [20, 16]
+  font_family: "DejaVu Sans"
+  font_size: 11
+  title_size: 14
+  label_size: 11
+  tick_size: 9
+  legend_size: 9
+
+# ---------------------------------------------------------------------------
+# Color palette — matches Module 2 visualization dark theme
+# ---------------------------------------------------------------------------
+colors:
+  background: "#1A1A2E"
+  grid: "#2D2D4E"
+  text: "#E0E0E0"
+  accent: "#4C72B0"
+  palette:
+    - "#4C72B0"
+    - "#DD8452"
+    - "#55A868"
+    - "#C44E52"
+    - "#8172B2"
+    - "#937860"
+    - "#DA8BC3"
+    - "#8C8C8C"
+    - "#CCB974"
+    - "#64B5CD"
+    - "#E377C2"
+    - "#7F7F7F"
+
+# ---------------------------------------------------------------------------
+# Analysis options
+# ---------------------------------------------------------------------------
+analysis:
+  dataset:
+    enabled: true
+  class_balance:
+    enabled: true
+    rare_class_threshold: 100         # classes with < N images are "rare"
+    minority_ratio_threshold: 0.1     # class is "minority" if count < 10% of max
+  modality:
+    enabled: true
+  image_properties:
+    enabled: true
+    compute_pixel_stats: true         # mean/std/histogram from sampled images
+    histogram_bins: 50
+  quality:
+    enabled: true
+    blur_threshold: 80.0
+    dark_threshold: 20.0
+    bright_threshold: 245.0
+    min_dimension: 32
+  preprocessing:
+    enabled: true
+  augmentation:
+    enabled: true
+
+# ---------------------------------------------------------------------------
+# Dataset Quality Score weights (must sum to 100)
+# ---------------------------------------------------------------------------
+quality_score:
+  class_balance_weight: 25
+  image_quality_weight: 25
+  corruption_weight: 25
+  resolution_consistency_weight: 25
+
+# ---------------------------------------------------------------------------
+# Report settings
+# ---------------------------------------------------------------------------
+reports:
+  generate_pdf: true
+  generate_markdown: true
+  generate_json: true
+  generate_csv: true
+  pdf_title: "Medical Dataset EDA Report"
+  pdf_author: "Medical AI System — Module 5"
+
+# ---------------------------------------------------------------------------
+# Visualization toggles — disable individual charts if needed
+# ---------------------------------------------------------------------------
+visualizations:
+  modality_pie: true
+  class_bar: true
+  class_treemap: true
+  class_violin: true
+  dataset_source_bar: true
+  resolution_scatter: true
+  resolution_histogram: true
+  file_size_histogram: true
+  pixel_intensity_histogram: true
+  brightness_distribution: true
+  contrast_distribution: true
+  aspect_ratio_histogram: true
+  train_test_split: true
+  augmentation_comparison: true
+  preprocessing_comparison: true
+  class_modality_heatmap: true
+  correlation_heatmap: true
+  quality_dashboard: true
+  dataset_overview_dashboard: true
+  augmentation_dashboard: true

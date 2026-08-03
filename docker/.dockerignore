@@ -1,0 +1,88 @@
+# ==============================================================================
+# Medical AI Platform — .dockerignore
+# Exclude files from Docker build context for smaller, faster builds
+# ==============================================================================
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Version control
+.git/
+.gitignore
+
+# Environment secrets — NEVER bake .env into images
+.env
+.env.*
+!.env.example
+
+# Test & CI artifacts
+.pytest_cache/
+.mypy_cache/
+htmlcov/
+*.coverage
+coverage.xml
+
+# Development IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs — mount as volume at runtime
+logs/
+
+# Database — mount as volume at runtime
+*.db
+*.sqlite
+*.sqlite3
+medical_ai.db
+
+# Outputs — mount as volume at runtime
+outputs/
+cache/
+tmp/
+temp/
+
+# Dataset directories (large; not needed in container)
+datasets/
+brain_mri/
+brain_ct/
+chest_xray/
+retina/
+histopathology/
+skin/
+ultrasound/
+augmented_images/
+augmentation_preview/
+processed_images/
+
+# Development scripts (not needed in runtime image)
+run_*.py
+predict_*.py
+train_*.py
+export_*.py
+evaluate_*.py
+
+# Sample files
+sample_*.json
+sample_*.md
+sample_*.pdf
+sample_*.csv
+
+# Documentation build artifacts
+docs/__pycache__/
+
+# OS artifacts
+Thumbs.db
+.DS_Store
+*.bak

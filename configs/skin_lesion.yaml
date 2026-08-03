@@ -1,0 +1,54 @@
+# configs/skin_lesion.yaml
+# Configuration for Module 12: Skin Lesion Cancer Classification Framework
+
+data:
+  metadata_path: "metadata/master_metadata.csv"
+  processed_images_dir: "processed_images"
+  ham10000_metadata_path: "datasets/skin/HAM10000_metadata.csv"
+  splits_output_path: "metadata/skin_splits.csv"
+  label_map_output_path: "metadata/skin_label_map.json"
+  target_size: [224, 224]
+  num_workers: 4
+  split_ratios:
+    train: 0.70
+    val: 0.15
+    test: 0.15
+
+model:
+  backbone: "efficientnet_b0"
+  pretrained: true
+  dropout_rate: 0.4
+  saved_model_dir: "saved_models/skin"
+
+training:
+  epochs: 30
+  batch_size: 32
+  learning_rate: 0.0003
+  weight_decay: 0.0001
+  patience: 7
+  min_delta: 0.001
+  use_amp: true
+  scheduler: "cosine"
+  warmup_epochs: 2
+
+evaluation:
+  output_dir: "outputs/skin"
+  generate_roc: true
+  generate_confusion_matrix: true
+  generate_misclassified: true
+  run_benchmark: true
+  benchmark_iterations: 50
+
+export:
+  onnx_path: "saved_models/skin/best_model.onnx"
+  torchscript_path: "saved_models/skin/best_model.torchscript"
+  opset_version: 17
+
+inference:
+  reports_dir: "outputs/skin/reports"
+  top_k: 3
+
+reliability:
+  high_threshold: 0.85
+  moderate_threshold: 0.65
+  enable_manual_review_flag: true

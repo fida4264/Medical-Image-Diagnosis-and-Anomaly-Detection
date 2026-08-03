@@ -1,0 +1,18 @@
+{
+  "label_to_class": {
+    "0": "colon_adenocarcinoma",
+    "1": "colon_normal",
+    "2": "lung_adenocarcinoma",
+    "3": "lung_normal",
+    "4": "lung_squamous_cell"
+  },
+  "class_to_label": {
+    "colon_adenocarcinoma": 0,
+    "colon_normal": 1,
+    "lung_adenocarcinoma": 2,
+    "lung_normal": 3,
+    "lung_squamous_cell": 4
+  },
+  "num_classes": 5,
+  "modality": "histopathology"
+}

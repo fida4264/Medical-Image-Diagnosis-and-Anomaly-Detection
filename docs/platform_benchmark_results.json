@@ -1,0 +1,832 @@
+{
+  "version": "0.17.0.0",
+  "generated": "2026-08-02T15:17:59.092530+00:00",
+  "platform_grade": "B+",
+  "comparison_summary": {
+    "top_model_by_f1": "brain_mri (MRI-DenseNet121)",
+    "top_model_by_speed": "skin (Skin-MobileNetV3)",
+    "most_efficient_model": "skin (Skin-MobileNetV3)",
+    "average_platform_f1": 0.9481,
+    "average_platform_latency_ms": 14.318,
+    "average_platform_throughput_rps": 72.11,
+    "total_models_evaluated": 7,
+    "entries": [
+      {
+        "rank": 1,
+        "modality": "chest_xray",
+        "model_name": "CXR-EfficientNetB0",
+        "architecture": "EfficientNet-B0",
+        "composite_score": 0.8468,
+        "f1_score": 0.9551,
+        "accuracy": 0.955,
+        "precision": 0.9556,
+        "recall": 0.9555,
+        "roc_auc": 0.8642,
+        "inference_latency_ms": 12.219,
+        "throughput_rps": 80.99,
+        "peak_memory_mb": 38.41,
+        "model_size_mb": 20.2,
+        "param_count": 5300000,
+        "efficiency_ratio": 0.0782,
+        "delta_f1_vs_top": 0.0,
+        "delta_latency_vs_top": 0.0
+      },
+      {
+        "rank": 2,
+        "modality": "brain_mri",
+        "model_name": "MRI-DenseNet121",
+        "architecture": "DenseNet-121",
+        "composite_score": 0.844,
+        "f1_score": 0.9634,
+        "accuracy": 0.965,
+        "precision": 0.9631,
+        "recall": 0.9639,
+        "roc_auc": 0.8817,
+        "inference_latency_ms": 14.642,
+        "throughput_rps": 67.6,
+        "peak_memory_mb": 38.37,
+        "model_size_mb": 30.5,
+        "param_count": 7900000,
+        "efficiency_ratio": 0.0658,
+        "delta_f1_vs_top": 0.0083,
+        "delta_latency_vs_top": 2.423
+      },
+      {
+        "rank": 3,
+        "modality": "ultrasound",
+        "model_name": "US-EfficientNetB3",
+        "architecture": "EfficientNet-B3",
+        "composite_score": 0.836,
+        "f1_score": 0.9438,
+        "accuracy": 0.945,
+        "precision": 0.9438,
+        "recall": 0.9449,
+        "roc_auc": 0.8291,
+        "inference_latency_ms": 13.077,
+        "throughput_rps": 75.81,
+        "peak_memory_mb": 38.43,
+        "model_size_mb": 46.7,
+        "param_count": 12200000,
+        "efficiency_ratio": 0.0722,
+        "delta_f1_vs_top": -0.0113,
+        "delta_latency_vs_top": 0.859
+      },
+      {
+        "rank": 4,
+        "modality": "skin",
+        "model_name": "Skin-MobileNetV3",
+        "architecture": "MobileNet-V3",
+        "composite_score": 0.8351,
+        "f1_score": 0.9257,
+        "accuracy": 0.925,
+        "precision": 0.9267,
+        "recall": 0.9273,
+        "roc_auc": 0.9312,
+        "inference_latency_ms": 9.863,
+        "throughput_rps": 100.02,
+        "peak_memory_mb": 38.43,
+        "model_size_mb": 20.7,
+        "param_count": 5400000,
+        "efficiency_ratio": 0.0939,
+        "delta_f1_vs_top": -0.0293,
+        "delta_latency_vs_top": -2.356
+      },
+      {
+        "rank": 5,
+        "modality": "brain_ct",
+        "model_name": "CT-ResNet50",
+        "architecture": "ResNet-50",
+        "composite_score": 0.8295,
+        "f1_score": 0.9388,
+        "accuracy": 0.94,
+        "precision": 0.9385,
+        "recall": 0.9394,
+        "roc_auc": 0.7889,
+        "inference_latency_ms": 13.848,
+        "throughput_rps": 71.3,
+        "peak_memory_mb": 38.41,
+        "model_size_mb": 97.7,
+        "param_count": 25600000,
+        "efficiency_ratio": 0.0678,
+        "delta_f1_vs_top": -0.0163,
+        "delta_latency_vs_top": 1.629
+      },
+      {
+        "rank": 6,
+        "modality": "retina",
+        "model_name": "Retina-InceptionV3",
+        "architecture": "Inception-V3",
+        "composite_score": 0.8251,
+        "f1_score": 0.9502,
+        "accuracy": 0.95,
+        "precision": 0.9541,
+        "recall": 0.9485,
+        "roc_auc": 0.8887,
+        "inference_latency_ms": 16.988,
+        "throughput_rps": 58.49,
+        "peak_memory_mb": 38.43,
+        "model_size_mb": 91.1,
+        "param_count": 23800000,
+        "efficiency_ratio": 0.0559,
+        "delta_f1_vs_top": -0.0049,
+        "delta_latency_vs_top": 4.769
+      },
+      {
+        "rank": 7,
+        "modality": "histopathology",
+        "model_name": "Histo-ViTB16",
+        "architecture": "ViT-B/16",
+        "composite_score": 0.8219,
+        "f1_score": 0.9597,
+        "accuracy": 0.96,
+        "precision": 0.9594,
+        "recall": 0.9604,
+        "roc_auc": 0.8607,
+        "inference_latency_ms": 19.592,
+        "throughput_rps": 50.59,
+        "peak_memory_mb": 38.42,
+        "model_size_mb": 330.0,
+        "param_count": 86500000,
+        "efficiency_ratio": 0.049,
+        "delta_f1_vs_top": 0.0046,
+        "delta_latency_vs_top": 7.374
+      }
+    ]
+  },
+  "leaderboard": {
+    "overall_platform_grade": "B+",
+    "top_performer": "chest_xray (CXR-EfficientNetB0) \u2014 Score 0.8468",
+    "coverage": {
+      "EXCELLENT": 0,
+      "GOOD": 7,
+      "FAIR": 0,
+      "POOR": 0
+    },
+    "rows": [
+      {
+        "rank": 1,
+        "tier": "GOOD",
+        "tier_icon": "\u2705",
+        "modality": "chest_xray",
+        "model_name": "CXR-EfficientNetB0",
+        "architecture": "EfficientNet-B0",
+        "composite_score": 0.8468,
+        "f1_score": 0.9551,
+        "accuracy": 0.955,
+        "roc_auc": 0.8642,
+        "inference_latency_ms": 12.219,
+        "throughput_rps": 80.99,
+        "efficiency_ratio": 0.0782
+      },
+      {
+        "rank": 2,
+        "tier": "GOOD",
+        "tier_icon": "\u2705",
+        "modality": "brain_mri",
+        "model_name": "MRI-DenseNet121",
+        "architecture": "DenseNet-121",
+        "composite_score": 0.844,
+        "f1_score": 0.9634,
+        "accuracy": 0.965,
+        "roc_auc": 0.8817,
+        "inference_latency_ms": 14.642,
+        "throughput_rps": 67.6,
+        "efficiency_ratio": 0.0658
+      },
+      {
+        "rank": 3,
+        "tier": "GOOD",
+        "tier_icon": "\u2705",
+        "modality": "ultrasound",
+        "model_name": "US-EfficientNetB3",
+        "architecture": "EfficientNet-B3",
+        "composite_score": 0.836,
+        "f1_score": 0.9438,
+        "accuracy": 0.945,
+        "roc_auc": 0.8291,
+        "inference_latency_ms": 13.077,
+        "throughput_rps": 75.81,
+        "efficiency_ratio": 0.0722
+      },
+      {
+        "rank": 4,
+        "tier": "GOOD",
+        "tier_icon": "\u2705",
+        "modality": "skin",
+        "model_name": "Skin-MobileNetV3",
+        "architecture": "MobileNet-V3",
+        "composite_score": 0.8351,
+        "f1_score": 0.9257,
+        "accuracy": 0.925,
+        "roc_auc": 0.9312,
+        "inference_latency_ms": 9.863,
+        "throughput_rps": 100.02,
+        "efficiency_ratio": 0.0939
+      },
+      {
+        "rank": 5,
+        "tier": "GOOD",
+        "tier_icon": "\u2705",
+        "modality": "brain_ct",
+        "model_name": "CT-ResNet50",
+        "architecture": "ResNet-50",
+        "composite_score": 0.8295,
+        "f1_score": 0.9388,
+        "accuracy": 0.94,
+        "roc_auc": 0.7889,
+        "inference_latency_ms": 13.848,
+        "throughput_rps": 71.3,
+        "efficiency_ratio": 0.0678
+      },
+      {
+        "rank": 6,
+        "tier": "GOOD",
+        "tier_icon": "\u2705",
+        "modality": "retina",
+        "model_name": "Retina-InceptionV3",
+        "architecture": "Inception-V3",
+        "composite_score": 0.8251,
+        "f1_score": 0.9502,
+        "accuracy": 0.95,
+        "roc_auc": 0.8887,
+        "inference_latency_ms": 16.988,
+        "throughput_rps": 58.49,
+        "efficiency_ratio": 0.0559
+      },
+      {
+        "rank": 7,
+        "tier": "GOOD",
+        "tier_icon": "\u2705",
+        "modality": "histopathology",
+        "model_name": "Histo-ViTB16",
+        "architecture": "ViT-B/16",
+        "composite_score": 0.8219,
+        "f1_score": 0.9597,
+        "accuracy": 0.96,
+        "roc_auc": 0.8607,
+        "inference_latency_ms": 19.592,
+        "throughput_rps": 50.59,
+        "efficiency_ratio": 0.049
+      }
+    ]
+  },
+  "modality_results": [
+    {
+      "modality": "brain_mri",
+      "model_name": "MRI-DenseNet121",
+      "architecture": "DenseNet-121",
+      "composite_score": 0.9586,
+      "timestamp": "2026-08-02T15:17:57.667687+00:00",
+      "classification_metrics": {
+        "accuracy": 0.965,
+        "precision": 0.9631,
+        "recall": 0.9639,
+        "f1_score": 0.9634,
+        "roc_auc": 0.8817,
+        "confusion_matrix": [
+          [
+            40,
+            2,
+            0,
+            0
+          ],
+          [
+            0,
+            47,
+            1,
+            1
+          ],
+          [
+            2,
+            0,
+            50,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            56
+          ]
+        ],
+        "n_samples": 200,
+        "class_names": [
+          "Glioma",
+          "Meningioma",
+          "No Tumor",
+          "Pituitary"
+        ],
+        "per_class_f1": {
+          "Glioma": 0.9412,
+          "Meningioma": 0.9592,
+          "No Tumor": 0.9709,
+          "Pituitary": 0.9825
+        }
+      },
+      "performance_metrics": {
+        "inference_latency_ms": 14.642,
+        "latency_median_ms": 14.521,
+        "latency_p95_ms": 15.79,
+        "latency_p99_ms": 15.79,
+        "latency_std_ms": 0.905,
+        "throughput_rps": 67.6,
+        "baseline_memory_mb": 38.36,
+        "peak_memory_mb": 38.37,
+        "memory_growth_mb": 0.0,
+        "model_size_mb": 30.5,
+        "param_count": 7900000,
+        "batch_throughput_rps": {
+          "1": 69.21,
+          "4": 262.14
+        }
+      },
+      "metadata": {
+        "n_samples": 200,
+        "n_classes": 4,
+        "device": "cpu",
+        "spec_latency_ms": 14.2
+      }
+    },
+    {
+      "modality": "chest_xray",
+      "model_name": "CXR-EfficientNetB0",
+      "architecture": "EfficientNet-B0",
+      "composite_score": 0.9499,
+      "timestamp": "2026-08-02T15:17:57.874942+00:00",
+      "classification_metrics": {
+        "accuracy": 0.955,
+        "precision": 0.9556,
+        "recall": 0.9555,
+        "f1_score": 0.9551,
+        "roc_auc": 0.8642,
+        "confusion_matrix": [
+          [
+            54,
+            1,
+            1
+          ],
+          [
+            1,
+            66,
+            4
+          ],
+          [
+            2,
+            0,
+            71
+          ]
+        ],
+        "n_samples": 200,
+        "class_names": [
+          "Normal",
+          "Pneumonia",
+          "COVID-19"
+        ],
+        "per_class_f1": {
+          "Normal": 0.9558,
+          "Pneumonia": 0.9565,
+          "COVID-19": 0.953
+        }
+      },
+      "performance_metrics": {
+        "inference_latency_ms": 12.219,
+        "latency_median_ms": 12.103,
+        "latency_p95_ms": 12.634,
+        "latency_p99_ms": 12.634,
+        "latency_std_ms": 0.402,
+        "throughput_rps": 80.99,
+        "baseline_memory_mb": 38.41,
+        "peak_memory_mb": 38.41,
+        "memory_growth_mb": 0.0,
+        "model_size_mb": 20.2,
+        "param_count": 5300000,
+        "batch_throughput_rps": {
+          "1": 79.41,
+          "4": 307.16
+        }
+      },
+      "metadata": {
+        "n_samples": 200,
+        "n_classes": 3,
+        "device": "cpu",
+        "spec_latency_ms": 11.7
+      }
+    },
+    {
+      "modality": "brain_ct",
+      "model_name": "CT-ResNet50",
+      "architecture": "ResNet-50",
+      "composite_score": 0.9295,
+      "timestamp": "2026-08-02T15:17:58.105253+00:00",
+      "classification_metrics": {
+        "accuracy": 0.94,
+        "precision": 0.9385,
+        "recall": 0.9394,
+        "f1_score": 0.9388,
+        "roc_auc": 0.7889,
+        "confusion_matrix": [
+          [
+            63,
+            5,
+            0
+          ],
+          [
+            3,
+            56,
+            1
+          ],
+          [
+            2,
+            1,
+            69
+          ]
+        ],
+        "n_samples": 200,
+        "class_names": [
+          "Normal",
+          "Hemorrhage",
+          "Ischemia"
+        ],
+        "per_class_f1": {
+          "Normal": 0.9265,
+          "Hemorrhage": 0.918,
+          "Ischemia": 0.9718
+        }
+      },
+      "performance_metrics": {
+        "inference_latency_ms": 13.848,
+        "latency_median_ms": 13.762,
+        "latency_p95_ms": 14.636,
+        "latency_p99_ms": 14.636,
+        "latency_std_ms": 0.554,
+        "throughput_rps": 71.3,
+        "baseline_memory_mb": 38.41,
+        "peak_memory_mb": 38.41,
+        "memory_growth_mb": 0.0,
+        "model_size_mb": 97.7,
+        "param_count": 25600000,
+        "batch_throughput_rps": {
+          "1": 75.36,
+          "4": 313.88
+        }
+      },
+      "metadata": {
+        "n_samples": 200,
+        "n_classes": 3,
+        "device": "cpu",
+        "spec_latency_ms": 13.5
+      }
+    },
+    {
+      "modality": "histopathology",
+      "model_name": "Histo-ViTB16",
+      "architecture": "ViT-B/16",
+      "composite_score": 0.953,
+      "timestamp": "2026-08-02T15:17:58.423979+00:00",
+      "classification_metrics": {
+        "accuracy": 0.96,
+        "precision": 0.9594,
+        "recall": 0.9604,
+        "f1_score": 0.9597,
+        "roc_auc": 0.8607,
+        "confusion_matrix": [
+          [
+            57,
+            0,
+            1,
+            1
+          ],
+          [
+            0,
+            48,
+            2,
+            1
+          ],
+          [
+            1,
+            1,
+            45,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            42
+          ]
+        ],
+        "n_samples": 200,
+        "class_names": [
+          "Benign",
+          "Malignant",
+          "DCIS",
+          "IDC"
+        ],
+        "per_class_f1": {
+          "Benign": 0.9661,
+          "Malignant": 0.96,
+          "DCIS": 0.9474,
+          "IDC": 0.9655
+        }
+      },
+      "performance_metrics": {
+        "inference_latency_ms": 19.592,
+        "latency_median_ms": 19.444,
+        "latency_p95_ms": 20.656,
+        "latency_p99_ms": 20.656,
+        "latency_std_ms": 1.175,
+        "throughput_rps": 50.59,
+        "baseline_memory_mb": 38.42,
+        "peak_memory_mb": 38.42,
+        "memory_growth_mb": 0.0,
+        "model_size_mb": 330.0,
+        "param_count": 86500000,
+        "batch_throughput_rps": {
+          "1": 53.39,
+          "4": 218.77
+        }
+      },
+      "metadata": {
+        "n_samples": 200,
+        "n_classes": 4,
+        "device": "cpu",
+        "spec_latency_ms": 18.1
+      }
+    },
+    {
+      "modality": "retina",
+      "model_name": "Retina-InceptionV3",
+      "architecture": "Inception-V3",
+      "composite_score": 0.9481,
+      "timestamp": "2026-08-02T15:17:58.703956+00:00",
+      "classification_metrics": {
+        "accuracy": 0.95,
+        "precision": 0.9541,
+        "recall": 0.9485,
+        "f1_score": 0.9502,
+        "roc_auc": 0.8887,
+        "confusion_matrix": [
+          [
+            29,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            47,
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            43,
+            0,
+            2
+          ],
+          [
+            1,
+            0,
+            1,
+            31,
+            2
+          ],
+          [
+            0,
+            1,
+            0,
+            0,
+            40
+          ]
+        ],
+        "n_samples": 200,
+        "class_names": [
+          "No DR",
+          "Mild",
+          "Moderate",
+          "Severe",
+          "Proliferative DR"
+        ],
+        "per_class_f1": {
+          "No DR": 0.9667,
+          "Mild": 0.9592,
+          "Moderate": 0.9556,
+          "Severe": 0.9394,
+          "Proliferative DR": 0.9302
+        }
+      },
+      "performance_metrics": {
+        "inference_latency_ms": 16.988,
+        "latency_median_ms": 16.935,
+        "latency_p95_ms": 17.728,
+        "latency_p99_ms": 17.728,
+        "latency_std_ms": 0.598,
+        "throughput_rps": 58.49,
+        "baseline_memory_mb": 38.43,
+        "peak_memory_mb": 38.43,
+        "memory_growth_mb": 0.0,
+        "model_size_mb": 91.1,
+        "param_count": 23800000,
+        "batch_throughput_rps": {
+          "1": 58.72,
+          "4": 252.68
+        }
+      },
+      "metadata": {
+        "n_samples": 200,
+        "n_classes": 5,
+        "device": "cpu",
+        "spec_latency_ms": 16.3
+      }
+    },
+    {
+      "modality": "skin",
+      "model_name": "Skin-MobileNetV3",
+      "architecture": "MobileNet-V3",
+      "composite_score": 0.933,
+      "timestamp": "2026-08-02T15:17:58.873656+00:00",
+      "classification_metrics": {
+        "accuracy": 0.925,
+        "precision": 0.9267,
+        "recall": 0.9273,
+        "f1_score": 0.9257,
+        "roc_auc": 0.9312,
+        "confusion_matrix": [
+          [
+            30,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            20,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            23,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            0,
+            24,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            23,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2,
+            32,
+            1
+          ],
+          [
+            1,
+            0,
+            0,
+            3,
+            0,
+            0,
+            33
+          ]
+        ],
+        "n_samples": 200,
+        "class_names": [
+          "Melanoma",
+          "Nevus",
+          "BCC",
+          "AK",
+          "BKL",
+          "DF",
+          "VASC"
+        ],
+        "per_class_f1": {
+          "Melanoma": 0.9375,
+          "Nevus": 0.9302,
+          "BCC": 0.9583,
+          "AK": 0.8889,
+          "BKL": 0.92,
+          "DF": 0.9412,
+          "VASC": 0.9041
+        }
+      },
+      "performance_metrics": {
+        "inference_latency_ms": 9.863,
+        "latency_median_ms": 9.996,
+        "latency_p95_ms": 10.243,
+        "latency_p99_ms": 10.243,
+        "latency_std_ms": 0.398,
+        "throughput_rps": 100.02,
+        "baseline_memory_mb": 38.43,
+        "peak_memory_mb": 38.43,
+        "memory_growth_mb": 0.0,
+        "model_size_mb": 20.7,
+        "param_count": 5400000,
+        "batch_throughput_rps": {
+          "1": 98.22,
+          "4": 398.25
+        }
+      },
+      "metadata": {
+        "n_samples": 200,
+        "n_classes": 7,
+        "device": "cpu",
+        "spec_latency_ms": 9.4
+      }
+    },
+    {
+      "modality": "ultrasound",
+      "model_name": "US-EfficientNetB3",
+      "architecture": "EfficientNet-B3",
+      "composite_score": 0.9376,
+      "timestamp": "2026-08-02T15:17:59.091012+00:00",
+      "classification_metrics": {
+        "accuracy": 0.945,
+        "precision": 0.9438,
+        "recall": 0.9449,
+        "f1_score": 0.9438,
+        "roc_auc": 0.8291,
+        "confusion_matrix": [
+          [
+            76,
+            2,
+            1
+          ],
+          [
+            2,
+            60,
+            4
+          ],
+          [
+            2,
+            0,
+            53
+          ]
+        ],
+        "n_samples": 200,
+        "class_names": [
+          "Benign",
+          "Malignant",
+          "Normal"
+        ],
+        "per_class_f1": {
+          "Benign": 0.956,
+          "Malignant": 0.9375,
+          "Normal": 0.9381
+        }
+      },
+      "performance_metrics": {
+        "inference_latency_ms": 13.077,
+        "latency_median_ms": 13.063,
+        "latency_p95_ms": 13.819,
+        "latency_p99_ms": 13.819,
+        "latency_std_ms": 0.638,
+        "throughput_rps": 75.81,
+        "baseline_memory_mb": 38.43,
+        "peak_memory_mb": 38.43,
+        "memory_growth_mb": 0.0,
+        "model_size_mb": 46.7,
+        "param_count": 12200000,
+        "batch_throughput_rps": {
+          "1": 76.25,
+          "4": 299.03
+        }
+      },
+      "metadata": {
+        "n_samples": 200,
+        "n_classes": 3,
+        "device": "cpu",
+        "spec_latency_ms": 12.6
+      }
+    }
+  ]
+}

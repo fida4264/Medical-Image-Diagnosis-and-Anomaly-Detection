@@ -1,0 +1,8 @@
+raw_modality,normalized_modality,abbreviation
+brain_mri,brain_mri,MRI
+brain_ct,brain_ct,CT
+chest_xray,chest_xray,XRAY
+histopathology,histopathology,HISTO
+retina,retina,RET
+skin,skin,SKIN
+Ultrasound,ultrasound,US

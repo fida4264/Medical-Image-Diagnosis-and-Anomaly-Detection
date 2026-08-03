@@ -1,0 +1,16 @@
+{
+  "label_to_class": {
+    "0": "glioma",
+    "1": "meningioma",
+    "2": "notumor",
+    "3": "pituitary"
+  },
+  "class_to_label": {
+    "glioma": 0,
+    "meningioma": 1,
+    "notumor": 2,
+    "pituitary": 3
+  },
+  "num_classes": 4,
+  "modality": "brain_mri"
+}

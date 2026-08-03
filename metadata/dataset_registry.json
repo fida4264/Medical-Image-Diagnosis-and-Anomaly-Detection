@@ -1,0 +1,156 @@
+{
+  "generated_at": "2026-07-30T12:01:07.617635+00:00",
+  "total_datasets": 9,
+  "total_images": 117917,
+  "total_modalities": 7,
+  "datasets": {
+    "COVID-19_Radiography_Dataset": {
+      "name": "COVID-19 Radiography Database",
+      "source": "Kaggle / IEEE DataPort",
+      "url": "https://www.kaggle.com/tawsifurrahman/covid19-radiography-database",
+      "license": "CC BY 4.0",
+      "modality": "chest_xray",
+      "paper": "Chowdhury et al. (2020) \u2014 IEEE Access",
+      "total_images": 42330,
+      "valid_images": 42241,
+      "num_classes": 4,
+      "classes": [
+        "covid",
+        "lung_opacity",
+        "normal",
+        "viral_pneumonia"
+      ],
+      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+    },
+    "vinbigdata": {
+      "name": "VinBigData Chest X-ray Abnormalities Detection",
+      "source": "Kaggle / VinBigData",
+      "url": "https://www.kaggle.com/c/vinbigdata-chest-xray-abnormalities-detection",
+      "license": "CC BY 4.0",
+      "modality": "chest_xray",
+      "paper": "VinBigData (2021)",
+      "total_images": 18000,
+      "valid_images": 18000,
+      "num_classes": 1,
+      "classes": [
+        "unknown"
+      ],
+      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+    },
+    "lung_colon_image_set": {
+      "name": "Lung and Colon Cancer Histopathological Images (LC25000)",
+      "source": "Kaggle / LC25000",
+      "url": "https://www.kaggle.com/andrewmvd/lung-and-colon-cancer-histopathological-images",
+      "license": "CC BY 4.0",
+      "modality": "histopathology",
+      "paper": "Borkowski et al. (2019) \u2014 arXiv",
+      "total_images": 25000,
+      "valid_images": 25000,
+      "num_classes": 5,
+      "classes": [
+        "colon_adenocarcinoma",
+        "colon_normal",
+        "lung_adenocarcinoma",
+        "lung_normal",
+        "lung_squamous_cell"
+      ],
+      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+    },
+    "ODIR-5K": {
+      "name": "Ocular Disease Intelligent Recognition (ODIR-5K)",
+      "source": "Kaggle / ODIR",
+      "url": "https://www.kaggle.com/andrewmvd/ocular-disease-recognition-odir5k",
+      "license": "Non-commercial research only",
+      "modality": "retina",
+      "paper": "ODIR Challenge (2019)",
+      "total_images": 8000,
+      "valid_images": 8000,
+      "num_classes": 1,
+      "classes": [
+        "unknown"
+      ],
+      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+    },
+    "preprocessed_images": {
+      "name": "Retina Fundus Images (Preprocessed)",
+      "source": "Local / Unknown",
+      "url": "",
+      "license": "Unknown",
+      "modality": "retina",
+      "paper": "",
+      "total_images": 6392,
+      "valid_images": 6392,
+      "num_classes": 1,
+      "classes": [
+        "unknown"
+      ],
+      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+    },
+    "HAM10000_images_part_1": {
+      "name": "Human Against Machine with 10000 training images (HAM10000)",
+      "source": "ISIC Archive / Kaggle",
+      "url": "https://www.kaggle.com/kmader/skin-lesion-analysis-toward-melanoma-detection",
+      "license": "CC BY-NC 4.0",
+      "modality": "skin",
+      "paper": "Tschandl et al. (2018) \u2014 Nature Scientific Data",
+      "total_images": 10015,
+      "valid_images": 10015,
+      "num_classes": 1,
+      "classes": [
+        "unknown"
+      ],
+      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+    },
+    "HAM10000_images_part_2": {
+      "name": "Human Against Machine with 10000 training images (HAM10000)",
+      "source": "ISIC Archive / Kaggle",
+      "url": "https://www.kaggle.com/kmader/skin-lesion-analysis-toward-melanoma-detection",
+      "license": "CC BY-NC 4.0",
+      "modality": "skin",
+      "paper": "Tschandl et al. (2018) \u2014 Nature Scientific Data",
+      "total_images": 10015,
+      "valid_images": 10015,
+      "num_classes": 1,
+      "classes": [
+        "unknown"
+      ],
+      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+    },
+    "Dataset_BUSI_with_GT": {
+      "name": "Breast Ultrasound Images Dataset (BUSI) with Ground Truth",
+      "source": "Kaggle",
+      "url": "https://www.kaggle.com/aryashah2k/breast-ultrasound-images-dataset",
+      "license": "CC BY 4.0",
+      "modality": "brain_ct",
+      "paper": "Al-Dhabyani et al. (2020) \u2014 Data in Brief",
+      "total_images": 980,
+      "valid_images": 980,
+      "num_classes": 4,
+      "classes": [
+        "benign",
+        "head_ct",
+        "malignant",
+        "normal"
+      ],
+      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+    },
+    "head_ct": {
+      "name": "Head CT Scan Dataset",
+      "source": "Kaggle",
+      "url": "https://www.kaggle.com/felipekitamura/head-ct-hemorrhage",
+      "license": "Unknown",
+      "modality": "brain_ct",
+      "paper": "",
+      "total_images": 980,
+      "valid_images": 980,
+      "num_classes": 4,
+      "classes": [
+        "benign",
+        "head_ct",
+        "malignant",
+        "normal"
+      ],
+      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+    }
+  }
+}

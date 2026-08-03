@@ -1,0 +1,14 @@
+{
+  "label_to_class": {
+    "0": "benign",
+    "1": "malignant",
+    "2": "normal"
+  },
+  "class_to_label": {
+    "benign": 0,
+    "malignant": 1,
+    "normal": 2
+  },
+  "num_classes": 3,
+  "modality": "ultrasound"
+}

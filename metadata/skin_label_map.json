@@ -1,0 +1,22 @@
+{
+  "label_to_class": {
+    "0": "actinic_keratosis",
+    "1": "basal_cell_carcinoma",
+    "2": "benign_keratosis",
+    "3": "dermatofibroma",
+    "4": "melanocytic_nevus",
+    "5": "melanoma",
+    "6": "vascular_lesion"
+  },
+  "class_to_label": {
+    "actinic_keratosis": 0,
+    "basal_cell_carcinoma": 1,
+    "benign_keratosis": 2,
+    "dermatofibroma": 3,
+    "melanocytic_nevus": 4,
+    "melanoma": 5,
+    "vascular_lesion": 6
+  },
+  "num_classes": 7,
+  "modality": "skin"
+}

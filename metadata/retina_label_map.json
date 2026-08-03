@@ -1,0 +1,10 @@
+{
+  "label_to_class": {
+    "0": "unknown"
+  },
+  "class_to_label": {
+    "unknown": 0
+  },
+  "num_classes": 1,
+  "modality": "retina"
+}

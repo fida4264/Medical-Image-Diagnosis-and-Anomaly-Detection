@@ -1,0 +1,160 @@
+# =============================================================================
+# configs/preprocessing.yaml
+# Medical Image Preprocessing Framework — Configuration
+# Module 3: Medical AI System
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# General settings applied to every modality unless overridden
+# ---------------------------------------------------------------------------
+general:
+  target_size: [224, 224]       # [height, width] — standard CNN input
+  output_format: "png"          # png or jpg
+  output_quality: 95            # JPEG quality (ignored for PNG)
+  normalize: true               # normalize pixel values to [0, 255] uint8
+  preserve_aspect_ratio: true   # pad to maintain aspect ratio
+  pad_to_square: true           # pad shorter side to make square before resize
+  pad_value: 0                  # black padding
+  num_workers: 8                # parallel processing threads
+  sample_mode: false            # true = process only sample_size per modality
+  sample_size: 10               # images per modality in sample mode
+  skip_existing: true           # skip already-processed images (resumable)
+  save_visualizations: true     # save before/after comparison grids
+
+# ---------------------------------------------------------------------------
+# Image quality thresholds — used for quality_report.json
+# ---------------------------------------------------------------------------
+quality:
+  blur_threshold: 80.0          # Laplacian variance < this → flagged as blurry
+  dark_threshold: 20.0          # Mean pixel value < this → flagged as too dark
+  bright_threshold: 245.0       # Mean pixel value > this → flagged as too bright
+  min_dimension: 32             # images smaller than this (either dim) → flagged
+  max_file_size_mb: 100.0       # warn if source file is unusually large
+
+# ---------------------------------------------------------------------------
+# Modality-specific pipelines
+# Each key matches the 'modality' column from master_metadata.csv
+# ---------------------------------------------------------------------------
+modalities:
+
+  brain_mri:
+    target_size: [224, 224]
+    input_channels: 1           # MRI scans are grayscale
+    output_channels: 3          # replicate to 3ch for CNN compatibility
+    convert_to_grayscale: true
+    clahe:
+      enabled: true
+      clip_limit: 2.0
+      tile_grid_size: [8, 8]
+    gaussian_denoise:
+      enabled: true
+      kernel_size: 3            # must be odd
+      sigma: 1.0
+    intensity_normalize: true
+    skull_strip_interface: false # placeholder for future implementation
+    bias_field_correction: false # placeholder for future implementation
+
+  brain_ct:
+    target_size: [224, 224]
+    input_channels: 1
+    output_channels: 3
+    windowing:
+      enabled: true
+      preset: "brain"           # brain | bone | soft_tissue
+      window_level: 40          # HU center
+      window_width: 80          # HU range
+    clahe:
+      enabled: true
+      clip_limit: 2.0
+      tile_grid_size: [8, 8]
+    noise_reduction:
+      enabled: true
+      method: "gaussian"        # gaussian | bilateral
+      kernel_size: 3
+    intensity_normalize: true
+
+  chest_xray:
+    target_size: [224, 224]
+    input_channels: 1
+    output_channels: 3
+    convert_to_grayscale: true
+    clahe:
+      enabled: true
+      clip_limit: 3.0
+      tile_grid_size: [8, 8]
+    histogram_equalization: false  # use CLAHE instead (less aggressive)
+    noise_reduction:
+      enabled: true
+      method: "gaussian"
+      kernel_size: 3
+    intensity_normalize: true
+
+  retina:
+    target_size: [224, 224]
+    input_channels: 3
+    output_channels: 3
+    circular_crop:
+      enabled: true
+      border_threshold: 10      # pixel value below this is considered black border
+    green_channel_enhance:
+      enabled: true             # green channel carries most retinal detail
+      enhance_factor: 1.2
+    clahe:
+      enabled: true
+      clip_limit: 2.0
+      tile_grid_size: [8, 8]
+    brightness_normalize: true
+    intensity_normalize: true
+
+  skin:
+    target_size: [224, 224]
+    input_channels: 3
+    output_channels: 3
+    color_normalize:
+      enabled: true
+      method: "channel_wise"    # normalize each channel independently
+    hair_removal_interface: false  # placeholder for future implementation
+    clahe:
+      enabled: true
+      clip_limit: 2.0
+      tile_grid_size: [8, 8]
+    intensity_normalize: true
+
+  ultrasound:
+    target_size: [224, 224]
+    input_channels: 1
+    output_channels: 3
+    convert_to_grayscale: true
+    speckle_reduction:
+      enabled: true
+      method: "median"          # median | bilateral | nlmeans
+      kernel_size: 3
+    clahe:
+      enabled: true
+      clip_limit: 2.5
+      tile_grid_size: [8, 8]
+    intensity_normalize: true
+
+  histopathology:
+    target_size: [224, 224]
+    input_channels: 3
+    output_channels: 3
+    color_normalize:
+      enabled: true
+      method: "channel_wise"
+    stain_normalize:
+      enabled: false            # interface only — requires reference image
+      method: "macenko"         # macenko | vahadane | reinhard
+    clahe:
+      enabled: false            # not typical for H&E stained slides
+    intensity_normalize: true
+
+# ---------------------------------------------------------------------------
+# Visualization settings
+# ---------------------------------------------------------------------------
+visualization:
+  enabled: true
+  samples_per_modality: 5
+  grid_figsize: [20, 8]
+  dpi: 150
+  save_format: "png"

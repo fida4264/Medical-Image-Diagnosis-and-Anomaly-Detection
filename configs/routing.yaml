@@ -1,0 +1,112 @@
+# =============================================================================
+# configs/routing.yaml
+# Medical AI Engine — Unified Modality Router Configuration
+# Module 14.2.3
+# =============================================================================
+#
+# This file controls:
+#   - Per-modality confidence thresholds for routing acceptance
+#   - Global fallback confidence floor
+#   - Supported modality set
+#   - Fallback policy behaviour
+#   - Manual override allowance
+#
+
+# ── Router Core Settings ──────────────────────────────────────────────────────
+
+router:
+  # Name identifier for logging and diagnostics
+  name: "UnifiedModalityRouter"
+
+  # Version of this configuration
+  version: "1.0.0"
+
+  # Maximum routing time before ROUTING_FAILED is returned (milliseconds)
+  routing_timeout_ms: 5000
+
+  # If true, a manual_modality_override in EngineContext bypasses Module 6
+  allow_manual_override: true
+
+  # Top-K modality candidates to evaluate in the routing decision
+  top_k: 3
+
+  # If true, logs routing decisions at INFO level
+  enable_routing_audit_log: true
+
+# ── Per-Modality Confidence Thresholds ────────────────────────────────────────
+#
+# Each modality has its own acceptance threshold.
+# If Module 6 confidence < threshold → LOW_CONFIDENCE outcome.
+# Higher-risk modalities (e.g. histopathology, retina) have higher thresholds.
+#
+
+confidence_thresholds:
+  brain_mri:       0.90
+  chest_xray:      0.85
+  brain_ct:        0.88
+  histopathology:  0.92
+  retina:          0.88
+  skin:            0.85
+  ultrasound:      0.83
+
+# ── Global Fallback Floor ─────────────────────────────────────────────────────
+#
+# Global minimum confidence below which all routing is rejected regardless
+# of per-modality threshold. Used when a modality is unknown/unsupported.
+#
+
+fallback:
+  # Global floor: if confidence < global_floor → reject regardless of modality
+  global_confidence_floor: 0.60
+
+  # What to do when confidence is between global_floor and per-modality threshold
+  # Options: "low_confidence_warn" | "reject"
+  below_threshold_action: "low_confidence_warn"
+
+  # What to do when the detected modality is not in supported_modalities
+  unsupported_modality_action: "reject"
+
+  # What to do when the adapter is registered but cannot be loaded
+  adapter_unavailable_action: "reject"
+
+# ── Supported Modalities ──────────────────────────────────────────────────────
+#
+# Only modalities in this list can receive ROUTE_TO_MODEL decisions.
+# Any modality detected by Module 6 that is NOT in this list → UNSUPPORTED_MODALITY.
+#
+
+supported_modalities:
+  - brain_mri
+  - chest_xray
+  - brain_ct
+  - histopathology
+  - retina
+  - skin
+  - ultrasound
+
+# ── Modality Classifier Settings (Module 6) ───────────────────────────────────
+#
+# Paths used when the Router instantiates the ModalityPredictor.
+#
+
+modality_classifier:
+  checkpoint_path: "outputs/models/modality_classifier_best.pt"
+  label_map_path: "metadata/modality_label_map.json"
+  device: null          # null = auto-detect (cuda if available, else cpu)
+  target_size: [224, 224]
+
+# ── Routing Policy ────────────────────────────────────────────────────────────
+#
+# Controls how the routing decision is assembled.
+#
+
+routing_policy:
+  # If true, a low-confidence warning is added to ctx.warnings even on success
+  warn_on_low_confidence: true
+
+  # Threshold below which a warning is added to ctx.warnings (even if routed)
+  # This is BELOW the per-modality threshold (warn zone)
+  confidence_warn_threshold: 0.70
+
+  # If true, routing decision is cached per-context (no re-run for same modality)
+  enable_route_caching: false

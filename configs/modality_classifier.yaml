@@ -1,0 +1,52 @@
+# =============================================================================
+# configs/modality_classifier.yaml
+# Medical Image Modality Classification Framework — Configuration
+# Module 6: Medical AI System
+# =============================================================================
+
+data:
+  metadata_path: "metadata/master_metadata.csv"
+  processed_images_dir: "processed_images"
+  splits_output_path: "metadata/modality_splits.csv"
+  label_map_output_path: "metadata/modality_label_map.json"
+  target_size: [224, 224]           # [height, width]
+  channels: 3                       # standard 3-channel RGB for pretrained backbones
+  split_ratios:
+    train: 0.70
+    val: 0.15
+    test: 0.15
+  random_seed: 42
+  num_workers: 4
+
+model:
+  backbone: "mobilenet_v3_small"     # mobilenet_v3_small | resnet18 | resnet34 | efficientnet_b0
+  pretrained: true
+  freeze_backbone: false
+  dropout_rate: 0.3
+  use_batch_norm: true
+  saved_model_path: "outputs/models/modality_classifier_best.pt"
+
+training:
+  epochs: 10
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  optimizer: "adamw"                # adam | adamw | sgd
+  loss_function: "cross_entropy"    # cross_entropy | focal_loss
+  scheduler: "reduce_on_plateau"   # reduce_on_plateau | cosine | none
+  patience: 3
+  grad_clip: 1.0
+
+evaluation:
+  report_json_path: "outputs/modality_evaluation_report.json"
+  report_md_path: "outputs/modality_evaluation_report.md"
+  confusion_matrix_png: "outputs/modality_confusion_matrix.png"
+
+onnx:
+  export_path: "outputs/models/modality_classifier.onnx"
+  opset_version: 17
+  input_name: "input_images"
+  output_name: "modality_logits"
+  dynamic_axes:
+    input_images: {0: "batch_size"}
+    modality_logits: {0: "batch_size"}

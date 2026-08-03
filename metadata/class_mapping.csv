@@ -1,0 +1,19 @@
+original_class,normalized_class
+COVID,covid
+Lung_Opacity,lung_opacity
+Normal,normal
+Viral Pneumonia,viral_pneumonia
+benign,benign
+colon_aca,colon_adenocarcinoma
+colon_n,colon_normal
+glioma,glioma
+head_ct,head_ct
+lung_aca,lung_adenocarcinoma
+lung_n,lung_normal
+lung_scc,lung_squamous_cell
+malignant,malignant
+meningioma,meningioma
+normal,normal
+notumor,notumor
+pituitary,pituitary
+unknown,unknown

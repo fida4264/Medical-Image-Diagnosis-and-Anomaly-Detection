@@ -1,0 +1,49 @@
+# ==============================================================================
+# Medical Image Diagnosis & Anomaly Detection Platform
+# Development Docker Compose Configuration
+# Module 22 — Docker, Deployment & Production Packaging
+# ==============================================================================
+
+version: '3.8'
+
+services:
+  medical-ai-platform-dev:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
+    container_name: medical_ai_platform_dev
+    ports:
+      - "${API_PORT:-8000}:8000"
+      - "${GRADIO_PORT:-7860}:7860"
+    environment:
+      - ENVIRONMENT=development
+      - DEBUG=true
+      - AUTH_REQUIRED=false
+      - ENABLE_DOCS=true
+      - DATABASE_PATH=/app/data/medical_ai.db
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - GRADIO_PORT=7860
+      - GRADIO_SERVER_NAME=0.0.0.0
+      - LOG_LEVEL=debug
+    volumes:
+      - ../api:/app/api
+      - ../medical_ai_engine:/app/medical_ai_engine
+      - ../app.py:/app/app.py
+      - ../deployment:/app/deployment
+      - ../configs:/app/configs
+      - ../tests:/app/tests
+      - medai_dev_data:/app/data
+      - medai_dev_logs:/app/logs
+      - medai_dev_outputs:/app/outputs
+    networks:
+      - medai_dev_network
+
+volumes:
+  medai_dev_data:
+  medai_dev_logs:
+  medai_dev_outputs:
+
+networks:
+  medai_dev_network:
+    driver: bridge

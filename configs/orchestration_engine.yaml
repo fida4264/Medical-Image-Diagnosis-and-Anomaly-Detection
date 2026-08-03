@@ -1,0 +1,31 @@
+# Medical AI Engine Core Configuration
+# Version: 0.14.2.1
+
+engine:
+  name: "MedicalAIEngineCore"
+  version: "0.14.2.1"
+  environment: "production"
+
+execution:
+  request_timeout_seconds: 30.0
+  max_concurrent_threads: 16
+  thread_pool_prefix: "MedAI-EngineWorker"
+
+logging:
+  level: "INFO"
+  file_path: "logs/medical_ai_engine.log"
+  enable_console: true
+  enable_file: true
+
+health:
+  check_interval_seconds: 60.0
+  statistics_interval_seconds: 300.0
+  enable_monitor: true
+
+async_distributed:
+  enable_async: false
+  enable_distributed: false
+  node_id: "node_local_01"
+
+extra:
+  enable_telemetry: false

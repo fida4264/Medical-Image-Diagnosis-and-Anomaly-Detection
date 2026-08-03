@@ -1,0 +1,137 @@
+# ==============================================================================
+# Medical Image Diagnosis & Anomaly Detection Platform
+# Production Kubernetes Deployment Manifest Template
+# Module 22 — Production Deployment Hardening Pass (v0.22.1.0)
+# ==============================================================================
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: medical-ai
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: medai-config
+  namespace: medical-ai
+data:
+  ENVIRONMENT: "production"
+  DEBUG: "false"
+  AUTH_REQUIRED: "false"
+  ENABLE_DOCS: "true"
+  API_PORT: "8000"
+  GRADIO_PORT: "7860"
+  LOG_LEVEL: "info"
+  DATABASE_PATH: "/app/data/medical_ai.db"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: medai-pvc-data
+  namespace: medical-ai
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: medical-ai-platform
+  namespace: medical-ai
+  labels:
+    app.kubernetes.io/name: medical-ai-platform
+    app.kubernetes.io/version: "0.22.1.0"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: medical-ai-platform
+  template:
+    metadata:
+      labels:
+        app: medical-ai-platform
+    spec:
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+        runAsNonRoot: true
+      containers:
+        - name: medical-ai-container
+          image: medical-ai-platform:v0.22.1.0
+          imagePullPolicy: IFNotPresent
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          envFrom:
+            - configMapRef:
+                name: medai-config
+          ports:
+            - containerPort: 8000
+              name: http-api
+            - containerPort: 7860
+              name: http-ui
+          resources:
+            limits:
+              cpu: "2000m"
+              memory: "4Gi"
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+          livenessProbe:
+            httpGet:
+              path: /health/liveness
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /health/readiness
+              port: 8000
+            initialDelaySeconds: 40
+            periodSeconds: 15
+            timeoutSeconds: 5
+          volumeMounts:
+            - name: data-volume
+              mountPath: /app/data
+            - name: logs-volume
+              mountPath: /app/logs
+            - name: outputs-volume
+              mountPath: /app/outputs
+            - name: tmp-volume
+              mountPath: /tmp
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: medai-pvc-data
+        - name: logs-volume
+          emptyDir: {}
+        - name: outputs-volume
+          emptyDir: {}
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: medical-ai-service
+  namespace: medical-ai
+spec:
+  type: ClusterIP
+  selector:
+    app: medical-ai-platform
+  ports:
+    - name: http-api
+      port: 8000
+      targetPort: 8000
+    - name: http-ui
+      port: 7860
+      targetPort: 7860

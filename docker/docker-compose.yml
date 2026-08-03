@@ -1,0 +1,154 @@
+# ==============================================================================
+# Medical Image Diagnosis & Anomaly Detection Platform
+# Production & Multi-Profile Docker Compose Configuration
+# Module 22 — Production Deployment Hardening Pass (v0.22.1.0)
+# ==============================================================================
+
+version: '3.8'
+
+services:
+  # ────────────────────────────────────────────────────────────────────────────
+  # PRODUCTION SERVICE (Default / Profile: production)
+  # ────────────────────────────────────────────────────────────────────────────
+  medical-ai-platform:
+    profiles: ["production", "default"]
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: medical_ai_platform
+    restart: unless-stopped
+
+    # Priority 4: Container Security Hardening
+    read_only: true
+    tmpfs:
+      - /tmp:exec,mode=1777,size=100M
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+    ports:
+      - "${API_PORT:-8000}:8000"
+      - "${GRADIO_PORT:-7860}:7860"
+
+    env_file:
+      - ../.env
+
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - DEBUG=${DEBUG:-false}
+      - AUTH_REQUIRED=${AUTH_REQUIRED:-false}
+      - API_KEYS=${API_KEYS:-}
+      - ENABLE_DOCS=${ENABLE_DOCS:-true}
+      - DATABASE_PATH=/app/data/medical_ai.db
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - GRADIO_PORT=7860
+      - GRADIO_SERVER_NAME=0.0.0.0
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+
+    volumes:
+      - medai_data:/app/data
+      - medai_logs:/app/logs
+      - medai_outputs:/app/outputs
+
+    networks:
+      - medai_network
+
+    # Priority 3: Resource Management Limits & Reservations
+    deploy:
+      resources:
+        limits:
+          cpus: '${CPU_LIMIT:-2.0}'
+          memory: '${MEMORY_LIMIT:-4G}'
+        reservations:
+          cpus: '${CPU_RESERVATION:-0.5}'
+          memory: '${MEMORY_RESERVATION:-1G}'
+
+    # Priority 8: Structured & Container-Friendly Logging Driver
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+    # Priority 7: Enhanced Container Health Check Probe
+    healthcheck:
+      test: ["CMD", "/bin/bash", "/app/deployment/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # DEVELOPMENT SERVICE (Profile: development)
+  # ────────────────────────────────────────────────────────────────────────────
+  medical-ai-platform-dev:
+    profiles: ["development"]
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
+    container_name: medical_ai_platform_dev
+    ports:
+      - "${API_PORT:-8000}:8000"
+      - "${GRADIO_PORT:-7860}:7860"
+    environment:
+      - ENVIRONMENT=development
+      - DEBUG=true
+      - AUTH_REQUIRED=false
+      - ENABLE_DOCS=true
+      - DATABASE_PATH=/app/data/medical_ai.db
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - GRADIO_PORT=7860
+      - GRADIO_SERVER_NAME=0.0.0.0
+      - LOG_LEVEL=debug
+    volumes:
+      - ../api:/app/api
+      - ../medical_ai_engine:/app/medical_ai_engine
+      - ../app.py:/app/app.py
+      - ../deployment:/app/deployment
+      - ../configs:/app/configs
+      - ../tests:/app/tests
+      - medai_dev_data:/app/data
+      - medai_dev_logs:/app/logs
+      - medai_dev_outputs:/app/outputs
+    networks:
+      - medai_network
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # TESTING SERVICE (Profile: testing)
+  # ────────────────────────────────────────────────────────────────────────────
+  medical-ai-platform-testing:
+    profiles: ["testing"]
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.dev
+    container_name: medical_ai_platform_testing
+    environment:
+      - ENVIRONMENT=testing
+      - DEBUG=false
+    command: ["python", "-m", "unittest", "discover", "-s", "tests"]
+    volumes:
+      - ../tests:/app/tests
+    networks:
+      - medai_network
+
+volumes:
+  medai_data:
+    driver: local
+  medai_logs:
+    driver: local
+  medai_outputs:
+    driver: local
+  medai_dev_data:
+    driver: local
+  medai_dev_logs:
+    driver: local
+  medai_dev_outputs:
+    driver: local
+
+networks:
+  medai_network:
+    driver: bridge
+    name: medai_network

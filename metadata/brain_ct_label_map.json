@@ -1,0 +1,10 @@
+{
+  "label_to_class": {
+    "0": "head_ct"
+  },
+  "class_to_label": {
+    "head_ct": 0
+  },
+  "num_classes": 1,
+  "modality": "brain_ct"
+}

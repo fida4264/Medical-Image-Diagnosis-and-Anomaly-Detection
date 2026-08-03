@@ -1,0 +1,278 @@
+# =============================================================================
+# configs/augmentation.yaml
+# Medical Image Augmentation Framework — Configuration
+# Module 4: Medical AI System
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# General settings applied to every modality unless overridden
+# ---------------------------------------------------------------------------
+general:
+  mode: "offline"               # offline | online
+  random_seed: 42               # global random seed for reproducibility
+  num_workers: 8                # parallel threads for offline generation
+  skip_existing: true           # skip already-augmented images (resumable)
+  output_format: "png"          # png | jpg
+  output_quality: 95            # JPEG quality (ignored for PNG)
+  augmentations_per_image: 5    # number of augmented copies per original
+
+# ---------------------------------------------------------------------------
+# Class balancing settings
+# ---------------------------------------------------------------------------
+class_balancing:
+  enabled: true
+  strategy: "minority_only"     # minority_only | all_classes | target_count
+  target_count: null            # used when strategy = target_count
+  min_class_ratio: 0.5          # if smallest_class / largest_class < this → apply
+
+# ---------------------------------------------------------------------------
+# Common augmentation parameters (defaults for all modalities)
+# ---------------------------------------------------------------------------
+common:
+  rotation:
+    enabled: true
+    limit: 15                   # degrees — safe for most medical imaging
+  horizontal_flip:
+    enabled: false              # disabled by default; enabled per-modality
+    probability: 0.5
+  vertical_flip:
+    enabled: false              # never enable — anatomically invalid for most
+    probability: 0.0
+  brightness_contrast:
+    enabled: true
+    brightness_limit: 0.15
+    contrast_limit: 0.15
+    probability: 0.7
+  gamma:
+    enabled: true
+    gamma_limit: [80, 120]      # percentage range around 100%
+    probability: 0.4
+  gaussian_noise:
+    enabled: true
+    var_limit: [5, 30]
+    probability: 0.4
+  blur:
+    enabled: true
+    blur_limit: 3
+    probability: 0.3
+  sharpen:
+    enabled: false
+    probability: 0.2
+  shift_scale_rotate:
+    enabled: true
+    shift_limit: 0.05
+    scale_limit: 0.05
+    rotate_limit: 10
+    probability: 0.5
+  elastic_transform:
+    enabled: false              # disabled by default — configurable per-modality
+    alpha: 1.0
+    sigma: 50.0
+    probability: 0.2
+  affine:
+    enabled: false
+    probability: 0.2
+  crop:
+    enabled: false
+    min_max_height: [180, 224]
+    probability: 0.3
+
+# ---------------------------------------------------------------------------
+# Modality-specific policy overrides
+# Each key matches the 'modality' column from preprocessing_metadata.csv
+# ---------------------------------------------------------------------------
+modalities:
+
+  brain_mri:
+    rotation:
+      limit: 15                 # small rotation — brain orientation is fixed
+    horizontal_flip:
+      enabled: false            # anatomically invalid for brain MRI
+    vertical_flip:
+      enabled: false
+    brightness_contrast:
+      brightness_limit: 0.1
+      contrast_limit: 0.15
+      probability: 0.6
+    gaussian_noise:
+      var_limit: [5, 20]
+      probability: 0.4
+    shift_scale_rotate:
+      shift_limit: 0.03
+      scale_limit: 0.03
+      rotate_limit: 10
+      probability: 0.5
+    elastic_transform:
+      enabled: false            # not used for brain MRI
+    clahe_variation:
+      enabled: true
+      clip_limit_range: [1.5, 3.0]
+      probability: 0.4
+
+  brain_ct:
+    rotation:
+      limit: 10                 # CT scans have tighter positional constraints
+    horizontal_flip:
+      enabled: false
+    vertical_flip:
+      enabled: false
+    brightness_contrast:
+      brightness_limit: 0.1
+      contrast_limit: 0.2
+      probability: 0.6
+    window_variation:
+      enabled: true
+      shift_range: [-10, 10]    # small HU window shift
+      probability: 0.3
+    gaussian_noise:
+      var_limit: [5, 25]
+      probability: 0.4
+    shift_scale_rotate:
+      shift_limit: 0.03
+      scale_limit: 0.03
+      rotate_limit: 8
+      probability: 0.5
+
+  chest_xray:
+    rotation:
+      limit: 10                 # chest X-rays allow small tilt corrections
+    horizontal_flip:
+      enabled: false            # left/right lung anatomy must be preserved
+    vertical_flip:
+      enabled: false
+    brightness_contrast:
+      brightness_limit: 0.15
+      contrast_limit: 0.2
+      probability: 0.7
+    histogram_variation:
+      enabled: true
+      probability: 0.3
+    shift_scale_rotate:
+      shift_limit: 0.05
+      scale_limit: 0.05
+      rotate_limit: 8
+      probability: 0.5
+    gaussian_noise:
+      var_limit: [5, 25]
+      probability: 0.35
+
+  retina:
+    rotation:
+      limit: 180                # retina fundus: full rotation is valid
+    horizontal_flip:
+      enabled: true             # left/right eye can be flipped
+      probability: 0.5
+    vertical_flip:
+      enabled: false
+    brightness_contrast:
+      brightness_limit: 0.2
+      contrast_limit: 0.2
+      probability: 0.7
+    color_jitter:
+      enabled: true
+      hue_shift_limit: 10
+      sat_shift_limit: 20
+      val_shift_limit: 20
+      probability: 0.5
+    crop:
+      enabled: true
+      min_max_height: [180, 224]
+      probability: 0.3
+    gaussian_noise:
+      var_limit: [5, 20]
+      probability: 0.3
+
+  skin:
+    rotation:
+      limit: 180                # skin lesions: full rotation valid
+    horizontal_flip:
+      enabled: true
+      probability: 0.5
+    vertical_flip:
+      enabled: true             # skin: vertical flip is also medically valid
+      probability: 0.5
+    brightness_contrast:
+      brightness_limit: 0.2
+      contrast_limit: 0.2
+      probability: 0.7
+    color_jitter:
+      enabled: true
+      hue_shift_limit: 15
+      sat_shift_limit: 25
+      val_shift_limit: 25
+      probability: 0.5
+    zoom:
+      enabled: true
+      scale_limit: 0.15
+      probability: 0.5
+    crop:
+      enabled: true
+      min_max_height: [180, 224]
+      probability: 0.4
+    gaussian_noise:
+      var_limit: [5, 30]
+      probability: 0.3
+
+  ultrasound:
+    rotation:
+      limit: 15                 # ultrasound has some probe angle variation
+    horizontal_flip:
+      enabled: false
+    vertical_flip:
+      enabled: false
+    brightness_contrast:
+      brightness_limit: 0.1
+      contrast_limit: 0.15
+      probability: 0.6
+    speckle_noise:
+      enabled: true
+      var_limit: [5, 25]
+      probability: 0.5
+    gaussian_noise:
+      var_limit: [5, 20]
+      probability: 0.4
+    shift_scale_rotate:
+      shift_limit: 0.04
+      scale_limit: 0.04
+      rotate_limit: 12
+      probability: 0.45
+
+  histopathology:
+    rotation:
+      limit: 180                # H&E slides: no fixed orientation
+    horizontal_flip:
+      enabled: true
+      probability: 0.5
+    vertical_flip:
+      enabled: true
+      probability: 0.5
+    brightness_contrast:
+      brightness_limit: 0.2
+      contrast_limit: 0.2
+      probability: 0.7
+    color_jitter:
+      enabled: true
+      hue_shift_limit: 20
+      sat_shift_limit: 30
+      val_shift_limit: 20
+      probability: 0.6
+    stain_variation:
+      enabled: true
+      probability: 0.4
+    crop:
+      enabled: true
+      min_max_height: [180, 224]
+      probability: 0.4
+    gaussian_noise:
+      var_limit: [5, 25]
+      probability: 0.3
+
+# ---------------------------------------------------------------------------
+# Visualization settings
+# ---------------------------------------------------------------------------
+visualization:
+  enabled: true
+  samples_per_modality: 5       # augmented versions per original shown
+  grid_figsize: [24, 6]
+  dpi: 120
+  save_format: "png"

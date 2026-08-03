@@ -1,0 +1,66 @@
+# ==============================================================================
+# Medical Image Diagnosis & Anomaly Detection Platform
+# Development Multi-Stage Dockerfile — Security & OCI Hardened
+# Module 22 — Production Deployment Hardening Pass (v0.22.1.0)
+# ==============================================================================
+
+FROM python:3.11-slim
+
+LABEL org.opencontainers.image.title="Medical Image Diagnosis Platform (Development)" \
+      org.opencontainers.image.description="Development Container with Debug Tools, Pytest, and Hot Reloading" \
+      org.opencontainers.image.version="0.22.1.0-dev" \
+      org.opencontainers.image.authors="Fida Hussain Mohammed" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.source="https://github.com/your-username/medical-image-diagnosis" \
+      org.opencontainers.image.vendor="Medical AI Systems"
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PATH="/opt/venv/bin:$PATH" \
+    PYTHONPATH="/app" \
+    ENVIRONMENT=development \
+    DEBUG=true \
+    AUTH_REQUIRED=false \
+    ENABLE_DOCS=true \
+    DATABASE_PATH=/app/data/medical_ai.db \
+    API_HOST=0.0.0.0 \
+    API_PORT=8000 \
+    GRADIO_PORT=7860 \
+    GRADIO_SERVER_NAME=0.0.0.0 \
+    LOG_LEVEL=debug
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    gcc \
+    libglib2.0-0 \
+    libsm6 \
+    libxrender1 \
+    libxext6 \
+    libgl1-mesa-glx \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN python -m venv /opt/venv
+
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --upgrade pip && \
+    pip install --extra-index-url https://download.pytorch.org/whl/cpu \
+        torch>=2.0.0 torchvision>=0.15.0 && \
+    pip install -r /tmp/requirements.txt && \
+    pip install \
+        fastapi>=0.100.0 \
+        uvicorn[standard]>=0.23.0 \
+        python-multipart>=0.0.6 \
+        gradio>=4.0.0 \
+        httpx>=0.24.0 \
+        pydantic>=2.0.0 \
+        python-dotenv>=1.0.0 \
+        pytest>=7.4.0 \
+        pytest-cov>=4.1.0
+
+WORKDIR /app
+
+EXPOSE 8000 7860
+
+CMD ["/bin/bash", "/app/deployment/startup.sh"]

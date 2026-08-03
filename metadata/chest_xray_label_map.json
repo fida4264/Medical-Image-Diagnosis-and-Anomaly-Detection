@@ -1,0 +1,18 @@
+{
+  "label_to_class": {
+    "0": "covid",
+    "1": "lung_opacity",
+    "2": "normal",
+    "3": "unknown",
+    "4": "viral_pneumonia"
+  },
+  "class_to_label": {
+    "covid": 0,
+    "lung_opacity": 1,
+    "normal": 2,
+    "unknown": 3,
+    "viral_pneumonia": 4
+  },
+  "num_classes": 5,
+  "modality": "chest_xray"
+}
