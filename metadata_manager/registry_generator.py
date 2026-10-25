@@ -105,10 +105,13 @@ class RegistryGenerator:
 
         for raw_key, base_info in DATASET_REGISTRY_INFO.items():
             # Filter master_df to rows belonging to this dataset
-            subset = df[df[source_col] == base_info.get("source", "")]
+            mod = base_info.get("modality", "")
+            dname = base_info.get("name", "")
+            subset = df[(df[COL_DATASET_NAME] == dname) & (df[COL_MODALITY] == mod)]
             if subset.empty:
-                # Try matching on dataset_name
-                subset = df[df[COL_DATASET_NAME] == base_info.get("name", "")]
+                subset = df[df[COL_DATASET_NAME] == dname]
+            if subset.empty:
+                subset = df[df[source_col] == base_info.get("source", "")]
 
             total_images = len(subset)
             valid_images = int(subset.get("is_valid", pd.Series([True] * len(subset))).sum()) \

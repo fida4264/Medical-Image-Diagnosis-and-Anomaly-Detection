@@ -1,0 +1,35 @@
+batch_size: 32
+checkpoint_dir: D:\Medical Image Diagnosis and Anomaly Detection\models\v2_baseline
+class_names:
+- normal
+- hemorrhage
+dataset_version: 2.0.0
+device: cpu
+early_stopping_metric: val_macro_f1
+early_stopping_patience: 5
+epochs: 10
+fold: null
+freeze_backbone: false
+image_size:
+- 224
+- 224
+in_channels: 3
+k_folds: 5
+learning_rate: 0.0001
+loss_type: cross_entropy
+modality: brain_ct
+model_name: resnet18
+notes: V2.0 baseline model experiment
+num_classes: 2
+num_workers: 0
+optimizer: adamw
+output_dir: D:\Medical Image Diagnosis and Anomaly Detection\outputs\experiments
+pos_weight: null
+pretrained: true
+scheduler: cosine
+seed: 42
+split_file: D:\Medical Image Diagnosis and Anomaly Detection\data\manifests\splits\brain_ct_v2.0_folds.csv
+split_type: kfold
+task: binary
+use_class_weights: false
+weight_decay: 0.0001

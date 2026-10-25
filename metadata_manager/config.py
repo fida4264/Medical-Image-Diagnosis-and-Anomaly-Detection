@@ -61,6 +61,7 @@ COL_CHANNELS = "channels"
 COL_FILE_SIZE = "file_size_bytes"
 COL_IS_VALID = "is_valid"
 COL_MD5_HASH = "md5_hash"
+COL_LESION_ID = "lesion_id"
 
 MASTER_METADATA_COLUMNS = [
     COL_IMAGE_ID,
@@ -80,6 +81,7 @@ MASTER_METADATA_COLUMNS = [
     COL_FILE_SIZE,
     COL_IS_VALID,
     COL_MD5_HASH,
+    COL_LESION_ID,
 ]
 
 # ---------------------------------------------------------------------------
@@ -155,9 +157,16 @@ CLASS_NORMALIZATION_RULES: list = [
     # Ultrasound — BUSI
     (["benign"], "benign"),
     (["malignant"], "malignant"),
-    # Retina / Skin — unknown
-    (["unknown", "odir-5k", "preprocessed_images", "ham10000", "ham10000_images_part_1",
-      "ham10000_images_part_2", "odir", "retina", "dataset_busi_with_gt",
+    # Skin — HAM10000 (7 classes)
+    (["nv", "melanocytic_nevus", "melanocytic nevi", "melanocytic_nevi", "melanocytic nevus"], "melanocytic_nevus"),
+    (["mel", "melanoma"], "melanoma"),
+    (["bkl", "benign_keratosis", "benign keratosis", "benign_keratosis_like_lesions", "benign keratosis-like lesions"], "benign_keratosis"),
+    (["bcc", "basal_cell_carcinoma", "basal cell carcinoma"], "basal_cell_carcinoma"),
+    (["akiec", "actinic_keratosis", "actinic keratoses", "actinic_keratoses", "actinic keratoses / intraepithelial carcinoma"], "actinic_keratosis"),
+    (["vasc", "vascular_lesion", "vascular lesions", "vascular_lesions"], "vascular_lesion"),
+    (["df", "dermatofibroma"], "dermatofibroma"),
+    # Retina / Skin / General — unknown
+    (["unknown", "odir-5k", "preprocessed_images", "odir", "retina", "dataset_busi_with_gt",
       "vinbigdata", "lung_colon_image_set"], "unknown"),
 ]
 
@@ -170,6 +179,7 @@ CLASS_NORMALIZATION_RULES: list = [
 #   USE_EXISTING   — disease_class from Module 1 is already correct
 #   PARENT_FOLDER  — take the parent folder of the image file
 #   ANCHOR_OFFSET  — find anchor folder in path, take N levels after it
+#   HAM10000_CSV   — match ISIC image ID against HAM10000_metadata.csv
 #   UNKNOWN        — cannot extract from path; mark as 'unknown'
 # ---------------------------------------------------------------------------
 
@@ -202,9 +212,9 @@ EXTRACTION_STRATEGIES: dict = {
     ("retina", "ODIR-5K"): {"strategy": "UNKNOWN"},
     ("retina", "preprocessed_images"): {"strategy": "UNKNOWN"},
 
-    # Skin — HAM10000 (flat images)
-    ("skin", "HAM10000_images_part_1"): {"strategy": "UNKNOWN"},
-    ("skin", "HAM10000_images_part_2"): {"strategy": "UNKNOWN"},
+    # Skin — HAM10000 (flat images, mapped via HAM10000_metadata.csv)
+    ("skin", "HAM10000_images_part_1"): {"strategy": "HAM10000_CSV"},
+    ("skin", "HAM10000_images_part_2"): {"strategy": "HAM10000_CSV"},
 
     # Ultrasound — BUSI
     # Path: .../Dataset_BUSI_with_GT/{DISEASE}/{file}
@@ -287,5 +297,121 @@ DATASET_REGISTRY_INFO: dict = {
         "license": "Unknown",
         "modality": "brain_ct",
         "paper": "",
+    },
+}
+
+# ---------------------------------------------------------------------------
+# V2.0 Canonical Metadata Schema & Manifests Configuration
+# ---------------------------------------------------------------------------
+
+MANIFESTS_DIR: Path = PROJECT_ROOT / "data" / "manifests"
+
+COL_V2_IMAGE_ID = "image_id"
+COL_V2_IMAGE_PATH = "image_path"
+COL_V2_MODALITY = "modality"
+COL_V2_DATASET_NAME = "dataset_name"
+COL_V2_DATASET_VERSION = "dataset_version"
+COL_V2_SOURCE = "source"
+COL_V2_ORIGINAL_LABEL = "original_label"
+COL_V2_STANDARDIZED_LABEL = "standardized_label"
+COL_V2_LABEL_TYPE = "label_type"
+COL_V2_CLASS_ID = "class_id"
+COL_V2_MULTI_LABEL_VECTOR = "multi_label_vector"
+COL_V2_PATIENT_ID = "patient_id"
+COL_V2_STUDY_ID = "study_id"
+COL_V2_LESION_ID = "lesion_id"
+COL_V2_EYE_ID = "eye_id"
+COL_V2_LEAKAGE_GROUP_ID = "leakage_group_id"
+COL_V2_LABEL_STATUS = "label_status"
+COL_V2_METADATA_SOURCE = "metadata_source"
+COL_V2_MASK_STATUS = "mask_status"
+COL_V2_QUALITY_STATUS = "quality_status"
+COL_V2_SPLIT_STATUS = "split_status"
+COL_V2_DUPLICATE_STATUS = "duplicate_status"
+
+V2_CANONICAL_COLUMNS = [
+    COL_V2_IMAGE_ID,
+    COL_V2_IMAGE_PATH,
+    COL_V2_MODALITY,
+    COL_V2_DATASET_NAME,
+    COL_V2_DATASET_VERSION,
+    COL_V2_SOURCE,
+    COL_V2_ORIGINAL_LABEL,
+    COL_V2_STANDARDIZED_LABEL,
+    COL_V2_LABEL_TYPE,
+    COL_V2_CLASS_ID,
+    COL_V2_MULTI_LABEL_VECTOR,
+    COL_V2_PATIENT_ID,
+    COL_V2_STUDY_ID,
+    COL_V2_LESION_ID,
+    COL_V2_EYE_ID,
+    COL_V2_LEAKAGE_GROUP_ID,
+    COL_V2_LABEL_STATUS,
+    COL_V2_METADATA_SOURCE,
+    COL_V2_MASK_STATUS,
+    COL_V2_QUALITY_STATUS,
+    COL_V2_SPLIT_STATUS,
+    COL_V2_DUPLICATE_STATUS,
+]
+
+# Modality dataset versions
+DATASET_VERSIONS: dict = {
+    "brain_mri": "brain_mri_v2.0",
+    "brain_ct": "brain_ct_v2.0",
+    "chest_xray": "chest_xray_v2.0",
+    "histopathology": "histopathology_v2.0",
+    "retina": "retina_v2.0",
+    "skin": "skin_v2.0",
+    "ultrasound": "ultrasound_v2.0",
+}
+
+# Modality standardized classes and class IDs
+V2_MODALITY_CLASSES: dict = {
+    "brain_mri": {
+        "glioma": 0,
+        "meningioma": 1,
+        "no_tumor": 2,
+        "pituitary": 3,
+    },
+    "brain_ct": {
+        "normal": 0,
+        "hemorrhage": 1,
+    },
+    "chest_xray": {
+        "covid": 0,
+        "lung_opacity": 1,
+        "normal": 2,
+        "viral_pneumonia": 3,
+    },
+    "histopathology": {
+        "colon_adenocarcinoma": 0,
+        "colon_normal": 1,
+        "lung_adenocarcinoma": 2,
+        "lung_normal": 3,
+        "lung_squamous_cell_carcinoma": 4,
+    },
+    "retina": {
+        "normal": 0,
+        "diabetic_retinopathy": 1,
+        "glaucoma": 2,
+        "cataract": 3,
+        "amd": 4,
+        "hypertension": 5,
+        "pathological_myopia": 6,
+        "other_abnormality": 7,
+    },
+    "skin": {
+        "melanocytic_nevus": 0,
+        "melanoma": 1,
+        "benign_keratosis": 2,
+        "basal_cell_carcinoma": 3,
+        "actinic_keratosis": 4,
+        "vascular_lesion": 5,
+        "dermatofibroma": 6,
+    },
+    "ultrasound": {
+        "benign": 0,
+        "malignant": 1,
+        "normal": 2,
     },
 }

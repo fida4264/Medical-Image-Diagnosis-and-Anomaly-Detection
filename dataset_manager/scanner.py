@@ -332,8 +332,8 @@ class DatasetScanner:
                 logger.debug("Skipping unsupported file: %s", file_path)
                 continue
 
-            # Skip mask files (e.g. segmentation ground truth in ultrasound)
-            if "_mask" in file_path.stem.lower():
+            # Skip mask files (e.g. segmentation ground truth in ultrasound or COVID chest X-ray)
+            if "_mask" in file_path.stem.lower() or any(part.lower() == "masks" for part in file_path.parts):
                 logger.debug("Skipping mask file: %s", file_path)
                 continue
 

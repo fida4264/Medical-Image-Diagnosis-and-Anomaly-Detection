@@ -49,6 +49,7 @@ from metadata_manager.config import (
     COL_HEIGHT,
     COL_CHANNELS,
     COL_FILE_SIZE,
+    COL_LESION_ID,
     MASTER_METADATA_COLUMNS,
     MODALITY_NORMALIZE,
     MODALITY_CHANNELS,
@@ -59,6 +60,51 @@ from metadata_manager.config import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+# ---------------------------------------------------------------------------
+# HAM10000 Metadata Lookup Helper
+# ---------------------------------------------------------------------------
+
+_HAM10000_LOOKUP: Optional[dict] = None
+
+HAM10000_DX_MAP = {
+    "nv": "melanocytic_nevus",
+    "mel": "melanoma",
+    "bkl": "benign_keratosis",
+    "bcc": "basal_cell_carcinoma",
+    "akiec": "actinic_keratosis",
+    "vasc": "vascular_lesion",
+    "df": "dermatofibroma",
+}
+
+
+def _get_ham10000_record(image_path: str) -> Optional[dict]:
+    """Retrieve HAM10000 metadata record (dx, lesion_id, etc.) by image_id (ISIC_...)."""
+    global _HAM10000_LOOKUP
+    if _HAM10000_LOOKUP is None:
+        _HAM10000_LOOKUP = {}
+        csv_path = Path("datasets/skin/HAM10000_metadata.csv")
+        if not csv_path.is_file():
+            from metadata_manager.config import PROJECT_ROOT
+            csv_path = PROJECT_ROOT / "datasets" / "skin" / "HAM10000_metadata.csv"
+        if csv_path.is_file():
+            try:
+                ham_df = pd.read_csv(csv_path)
+                for _, row in ham_df.iterrows():
+                    iid = str(row.get("image_id", "")).strip()
+                    if iid:
+                        _HAM10000_LOOKUP[iid] = {
+                            "dx": str(row.get("dx", "")).strip(),
+                            "lesion_id": str(row.get("lesion_id", "")).strip(),
+                            "dx_type": str(row.get("dx_type", "")).strip(),
+                        }
+                logger.info("Loaded %d records from HAM10000_metadata.csv", len(_HAM10000_LOOKUP))
+            except Exception as exc:
+                logger.warning("Failed to load HAM10000 metadata CSV: %s", exc)
+
+    stem = Path(image_path).stem
+    return _HAM10000_LOOKUP.get(stem)
 
 
 # ---------------------------------------------------------------------------
@@ -79,6 +125,7 @@ def _extract_disease_from_path(
     * USE_EXISTING   — disease_class_raw is already correct
     * PARENT_FOLDER  — parent folder of the image file
     * ANCHOR_OFFSET  — N levels after a named anchor folder
+    * HAM10000_CSV   — match ISIC image ID against HAM10000_metadata.csv
     * UNKNOWN        — cannot extract; return 'unknown'
 
     Parameters
@@ -123,6 +170,14 @@ def _extract_disease_from_path(
         except StopIteration:
             pass
         return disease_class_raw
+
+    if strategy == "HAM10000_CSV":
+        rec = _get_ham10000_record(image_path)
+        if rec and rec.get("dx"):
+            dx = rec["dx"]
+            return HAM10000_DX_MAP.get(dx, dx)
+        logger.warning("Unmatched HAM10000 image file: %s", image_path)
+        return "unknown"
 
     # UNKNOWN or unrecognised strategy
     return "unknown"
@@ -224,6 +279,19 @@ class MetadataStandardizer:
             lambda m: MODALITY_CHANNELS.get(m, 3)
         )
         logger.info("  [5/7] Channel counts assigned.")
+
+        # Step 6.5 — Assign lesion_id for skin images
+        def _get_lesion_id(image_path: str, modality_norm: str) -> str:
+            if modality_norm == "skin":
+                rec = _get_ham10000_record(image_path)
+                if rec and rec.get("lesion_id"):
+                    return rec["lesion_id"]
+            return "unspecified"
+
+        df[COL_LESION_ID] = df.apply(
+            lambda row: _get_lesion_id(row["image_path"], row[COL_MODALITY]),
+            axis=1,
+        )
 
         # Step 7 — Rename / alias columns to master schema
         df = df.rename(columns={

@@ -23,6 +23,7 @@ from api.exceptions import register_exception_handlers
 from api.middleware import setup_middleware
 from api.routes import benchmark, history, prediction, reports, system
 from api.settings import settings
+from pipeline_v2.api_router import router as v2_pipeline_router
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("MedicalAI.API")
@@ -88,6 +89,7 @@ def create_app() -> FastAPI:
     app.include_router(history.router)
     app.include_router(reports.router)
     app.include_router(benchmark.router)
+    app.include_router(v2_pipeline_router)
 
     # When documentation is disabled, return structured JSON instead of broken page
     if not settings.ENABLE_DOCS:

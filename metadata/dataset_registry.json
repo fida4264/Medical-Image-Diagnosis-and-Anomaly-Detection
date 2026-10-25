@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-07-30T12:01:07.617635+00:00",
+  "generated_at": "2026-08-19T05:39:04.634571+00:00",
   "total_datasets": 9,
-  "total_images": 117917,
+  "total_images": 96752,
   "total_modalities": 7,
   "datasets": {
     "COVID-19_Radiography_Dataset": {
@@ -11,8 +11,8 @@
       "license": "CC BY 4.0",
       "modality": "chest_xray",
       "paper": "Chowdhury et al. (2020) \u2014 IEEE Access",
-      "total_images": 42330,
-      "valid_images": 42241,
+      "total_images": 21165,
+      "valid_images": 21165,
       "num_classes": 4,
       "classes": [
         "covid",
@@ -20,7 +20,7 @@
         "normal",
         "viral_pneumonia"
       ],
-      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+      "last_scan_time": "2026-08-19T05:33:47.238935+00:00"
     },
     "vinbigdata": {
       "name": "VinBigData Chest X-ray Abnormalities Detection",
@@ -35,7 +35,7 @@
       "classes": [
         "unknown"
       ],
-      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+      "last_scan_time": "2026-08-19T05:33:47.238935+00:00"
     },
     "lung_colon_image_set": {
       "name": "Lung and Colon Cancer Histopathological Images (LC25000)",
@@ -54,7 +54,7 @@
         "lung_normal",
         "lung_squamous_cell"
       ],
-      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+      "last_scan_time": "2026-08-19T05:33:47.238935+00:00"
     },
     "ODIR-5K": {
       "name": "Ocular Disease Intelligent Recognition (ODIR-5K)",
@@ -69,7 +69,7 @@
       "classes": [
         "unknown"
       ],
-      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+      "last_scan_time": "2026-08-19T05:33:47.238935+00:00"
     },
     "preprocessed_images": {
       "name": "Retina Fundus Images (Preprocessed)",
@@ -84,7 +84,7 @@
       "classes": [
         "unknown"
       ],
-      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+      "last_scan_time": "2026-08-19T05:33:47.238935+00:00"
     },
     "HAM10000_images_part_1": {
       "name": "Human Against Machine with 10000 training images (HAM10000)",
@@ -95,11 +95,17 @@
       "paper": "Tschandl et al. (2018) \u2014 Nature Scientific Data",
       "total_images": 10015,
       "valid_images": 10015,
-      "num_classes": 1,
+      "num_classes": 7,
       "classes": [
-        "unknown"
+        "actinic_keratosis",
+        "basal_cell_carcinoma",
+        "benign_keratosis",
+        "dermatofibroma",
+        "melanocytic_nevus",
+        "melanoma",
+        "vascular_lesion"
       ],
-      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+      "last_scan_time": "2026-08-19T05:33:47.238935+00:00"
     },
     "HAM10000_images_part_2": {
       "name": "Human Against Machine with 10000 training images (HAM10000)",
@@ -110,29 +116,34 @@
       "paper": "Tschandl et al. (2018) \u2014 Nature Scientific Data",
       "total_images": 10015,
       "valid_images": 10015,
-      "num_classes": 1,
+      "num_classes": 7,
       "classes": [
-        "unknown"
+        "actinic_keratosis",
+        "basal_cell_carcinoma",
+        "benign_keratosis",
+        "dermatofibroma",
+        "melanocytic_nevus",
+        "melanoma",
+        "vascular_lesion"
       ],
-      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+      "last_scan_time": "2026-08-19T05:33:47.238935+00:00"
     },
     "Dataset_BUSI_with_GT": {
       "name": "Breast Ultrasound Images Dataset (BUSI) with Ground Truth",
       "source": "Kaggle",
       "url": "https://www.kaggle.com/aryashah2k/breast-ultrasound-images-dataset",
       "license": "CC BY 4.0",
-      "modality": "brain_ct",
+      "modality": "ultrasound",
       "paper": "Al-Dhabyani et al. (2020) \u2014 Data in Brief",
-      "total_images": 980,
-      "valid_images": 980,
-      "num_classes": 4,
+      "total_images": 780,
+      "valid_images": 780,
+      "num_classes": 3,
       "classes": [
         "benign",
-        "head_ct",
         "malignant",
         "normal"
       ],
-      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+      "last_scan_time": "2026-08-19T05:33:47.238935+00:00"
     },
     "head_ct": {
       "name": "Head CT Scan Dataset",
@@ -141,16 +152,13 @@
       "license": "Unknown",
       "modality": "brain_ct",
       "paper": "",
-      "total_images": 980,
-      "valid_images": 980,
-      "num_classes": 4,
+      "total_images": 200,
+      "valid_images": 200,
+      "num_classes": 1,
       "classes": [
-        "benign",
-        "head_ct",
-        "malignant",
-        "normal"
+        "head_ct"
       ],
-      "last_scan_time": "2026-07-30T12:00:14.976394+00:00"
+      "last_scan_time": "2026-08-19T05:33:47.238935+00:00"
     }
   }
 }

@@ -18,6 +18,9 @@ from metadata_manager.image_mapper import ImageMapper
 from metadata_manager.registry_generator import RegistryGenerator
 from metadata_manager.summary_generator import SummaryGenerator
 from metadata_manager.visualization import Visualizer
+from metadata_manager.v2_label_reconstructor import V2LabelReconstructor
+from metadata_manager.v2_quality_controller import V2QualityController
+from metadata_manager.config import V2_CANONICAL_COLUMNS
 
 __all__ = [
     "MetadataLoader",
@@ -27,7 +30,10 @@ __all__ = [
     "RegistryGenerator",
     "SummaryGenerator",
     "Visualizer",
+    "V2LabelReconstructor",
+    "V2QualityController",
+    "V2_CANONICAL_COLUMNS",
 ]
 
-__version__ = "1.0.0"
+__version__ = "2.0.0"
 __module__ = "Module 2 — Dataset Standardization & Metadata Management"

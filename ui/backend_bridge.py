@@ -383,9 +383,33 @@ def _demo_benchmark() -> Dict[str, Any]:
     }
 
 
+def run_v2_hardened_prediction(
+    image_input: Any,
+    modality: str,
+    patient_id: Optional[str] = None,
+    ood_method: str = "knn",
+) -> Tuple[bool, Dict[str, Any], str]:
+    """
+    Executes V2 Phase 9 Hardened Inference Pipeline with Quality Gates.
+    """
+    try:
+        from pipeline_v2.inference_pipeline import get_pipeline_v2
+        pipeline = get_pipeline_v2()
+        res = pipeline.predict(
+            image_input=image_input,
+            modality=modality,
+            patient_id=patient_id,
+            ood_method_override=ood_method,
+        )
+        return True, res.model_dump(), ""
+    except Exception as exc:
+        logger.error(f"V2 hardened prediction failed: {exc}")
+        return False, {}, str(exc)
+
+
 __all__ = [
     "get_engine", "engine_health", "engine_statistics",
-    "run_prediction", "generate_report", "export_report",
+    "run_prediction", "run_v2_hardened_prediction", "generate_report", "export_report",
     "get_prediction_history", "get_db_statistics",
     "get_benchmark_summary",
 ]

@@ -112,3 +112,43 @@ saved_models/
 # OS / temp files
 *.tmp
 *.bak
+
+##################################################
+# V2.0 - Trained Models and Generated Artifacts
+##################################################
+
+# Model checkpoints and weights
+models/
+saved_models/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.safetensors
+
+# OOD reference arrays and generated model artifacts
+*.npz
+
+# Generated outputs and experiment results
+outputs/
+runs/
+wandb/
+
+# Grad-CAM overlays and generated prediction images
+gradcam_outputs/
+prediction_outputs/
+
+# Dataset files - keep raw medical images out of GitHub
+datasets/
+data/raw/
+data/processed/
+
+# Local credentials and secrets
+.env
+.env.*
+!.env.example
+
+# Python and test caches
+__pycache__/
+.pytest_cache/
+.mypy_cache/

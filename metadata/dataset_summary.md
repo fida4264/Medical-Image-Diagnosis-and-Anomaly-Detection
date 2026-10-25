@@ -1,6 +1,6 @@
 # Dataset Summary
 
-> Generated: 2026-07-30 12:01 UTC
+> Generated: 2026-08-19 05:39 UTC
 
 ---
 
@@ -8,13 +8,13 @@
 
 | Metric | Value |
 |---|---|
-| Total Images | 117,917 |
-| Valid Images | 117,828 |
-| Invalid Images | 89 |
+| Total Images | 96,752 |
+| Valid Images | 96,752 |
+| Invalid Images | 0 |
 | Total Modalities | 7 |
-| Total Normalized Classes | 17 |
+| Total Normalized Classes | 24 |
 | Dataset Splits | unspecified, test, train |
-| Total Dataset Size | 10.42 GB |
+| Total Dataset Size | 10.39 GB |
 
 ## Images per Modality
 
@@ -22,40 +22,47 @@
 |---|---|---|---|---|---|
 | brain_ct | 200 | 200 | 1 | 356 px | 434 px |
 | brain_mri | 7,200 | 7,200 | 4 | 453 px | 457 px |
-| chest_xray | 60,330 | 60,241 | 5 | 347 px | 347 px |
+| chest_xray | 39,165 | 39,165 | 5 | 397 px | 397 px |
 | histopathology | 25,000 | 25,000 | 5 | 768 px | 768 px |
 | retina | 14,392 | 14,392 | 1 | 1602 px | 1235 px |
-| skin | 10,015 | 10,015 | 1 | 600 px | 450 px |
+| skin | 10,015 | 10,015 | 7 | 600 px | 450 px |
 | ultrasound | 780 | 780 | 3 | 616 px | 501 px |
 
 ## Images per Disease Class
 
 | Normalized Class | Count | Modalities |
 |---|---|---|
-| unknown | 42,407 | chest_xray, retina, skin |
-| normal | 20,517 | chest_xray, ultrasound |
-| lung_opacity | 12,024 | chest_xray |
-| covid | 7,232 | chest_xray |
-| lung_squamous_cell | 5,000 | histopathology |
-| lung_normal | 5,000 | histopathology |
-| lung_adenocarcinoma | 5,000 | histopathology |
+| unknown | 32,392 | chest_xray, retina |
+| normal | 10,325 | chest_xray, ultrasound |
+| melanocytic_nevus | 6,705 | skin |
+| lung_opacity | 6,012 | chest_xray |
 | colon_normal | 5,000 | histopathology |
 | colon_adenocarcinoma | 5,000 | histopathology |
-| viral_pneumonia | 2,690 | chest_xray |
-| notumor | 1,800 | brain_mri |
+| lung_adenocarcinoma | 5,000 | histopathology |
+| lung_squamous_cell | 5,000 | histopathology |
+| lung_normal | 5,000 | histopathology |
+| covid | 3,616 | chest_xray |
 | pituitary | 1,800 | brain_mri |
 | glioma | 1,800 | brain_mri |
+| notumor | 1,800 | brain_mri |
 | meningioma | 1,800 | brain_mri |
+| viral_pneumonia | 1,345 | chest_xray |
+| melanoma | 1,113 | skin |
+| benign_keratosis | 1,099 | skin |
+| basal_cell_carcinoma | 514 | skin |
 | benign | 437 | ultrasound |
+| actinic_keratosis | 327 | skin |
 | malignant | 210 | ultrasound |
 | head_ct | 200 | brain_ct |
+| vascular_lesion | 142 | skin |
+| dermatofibroma | 115 | skin |
 
 ## Dataset Sources
 
 | Dataset Name | Images | Modality |
 |---|---|---|
-| COVID-19 Radiography Database | 42,330 | chest_xray |
 | Lung and Colon Cancer Histopathological Images (LC25000) | 25,000 | histopathology |
+| COVID-19 Radiography Database | 21,165 | chest_xray |
 | VinBigData Chest X-ray Abnormalities Detection | 18,000 | chest_xray |
 | Human Against Machine with 10000 training images (HAM10000) | 10,015 | skin |
 | Ocular Disease Intelligent Recognition (ODIR-5K) | 8,000 | retina |
@@ -67,7 +74,7 @@
 | Breast Ultrasound Images Dataset (BUSI) with Ground Truth | 780 | ultrasound |
 | Head CT Scan Dataset | 200 | brain_ct |
 
-**Largest dataset:** COVID-19 Radiography Database (42,330 images)
+**Largest dataset:** Lung and Colon Cancer Histopathological Images (LC25000) (25,000 images)
 **Smallest dataset:** Head CT Scan Dataset (200 images)
 
 ## Image Resolution Statistics
@@ -76,14 +83,14 @@
 |---|---|---|
 | Min | 134 | 135 |
 | Max | 5184 | 3456 |
-| Mean | 619.4 | 561.5 |
+| Mean | 698.9 | 628.3 |
 | Median | 512 | 512 |
 
 ## Supported File Extensions
 
 | Extension | Count |
 |---|---|
-| .png | 61,310 |
+| .png | 40,145 |
 | .jpg | 31,607 |
 | .jpeg | 25,000 |
 
@@ -91,8 +98,8 @@
 
 | Metric | Value |
 |---|---|
-| Valid Images | 117,828 (99.9%) |
-| Invalid / Corrupt Images | 89 (0.1%) |
+| Valid Images | 96,752 (100.0%) |
+| Invalid / Corrupt Images | 0 (0.0%) |
 
 ---
 
